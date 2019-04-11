@@ -1,11 +1,18 @@
 {
-  "name": "carrack-front-end",
-  "version": "0.1.0",
+  "name": "Carrack",
+  "version": "1.0.0",
+  "description": "Ship of the line game",
+  "main": "index.js",
+  "repository": "git@github.com:MoreSaltMoreLemon/Carrack-front-end.git",
+  "author": "Ezra Schwepker <ezraschwepker@gmail.com> Allen Woods <allen.h.woods@gmail.com>",
+  "license": "MIT",
   "private": true,
   "dependencies": {
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-scripts": "2.1.8"
+    "react-scripts": "2.1.8",
+    "react-router": "^5.0.0",
+    "react-router-dom": "^5.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
