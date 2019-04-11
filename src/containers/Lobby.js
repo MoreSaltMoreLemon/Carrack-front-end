@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { PLAYERS_URL, GAMES_URL } from '../ENV'
+import { PLAYERS_URL, GAMES_URL, BASE_URL } from '../ENV'
 
 export default class Lobby extends Component {
   constructor(props) {
@@ -33,6 +33,10 @@ export default class Lobby extends Component {
     httpRequest(PLAYERS_URL, "post", params)
       .then(response => response.json())
       .then(json => console.log(json))
+  }
+
+  loginUser(username) {
+    httpRequest(BASE_URL + "/login")
   }
 
   render() {
