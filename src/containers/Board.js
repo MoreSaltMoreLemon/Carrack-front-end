@@ -1,7 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import '../App.css'
 import Cell from '../components/Cell'
 import { Ship } from '../components/Ship'
+import MoveButton from '../components/MoveButton'
 
 export default class Board extends Component {
   constructor() {
@@ -11,10 +12,10 @@ export default class Board extends Component {
     }
   }
 
-  toggleSelected = (e) => {
-    const selected = !this.state.selected
+  toggleSelected = (id) => {
+    const selected = id === this.state.selected ? null : id
+
     this.setState({ selected })
-    console.log(`selected = ${this.state.selected}`)
   }
 
   moveShip = (e) => {
@@ -46,12 +47,29 @@ export default class Board extends Component {
     return (
       ships.map(ship => {
         const place = gridPlacement(ship.x, ship.y, size)
+        const selected = this.state.selected === ship.id
+        let moveButtons
+        if (selected) {
+          moveButtons = (
+            <Fragment>
+              <MoveButton place={gridPlacement(ship.x - 1, ship.y, size)} />
+              <MoveButton place={gridPlacement(ship.x + 1, ship.y, size)} />
+              <MoveButton place={gridPlacement(ship.x, ship.y - 1, size)} />
+              <MoveButton place={gridPlacement(ship.x, ship.y + 1, size)} />
+            </Fragment>
+          )
+        }
+
         return (
+          <Fragment>
           <Ship
             key={place}
             coord={{ x: ship.x, y: ship.y }}
             place={place}
+            toggleSelected={() => this.toggleSelected(ship.id)}
           />
+          { selected ? moveButtons : null }
+          </Fragment>        
         )
       })
     )
