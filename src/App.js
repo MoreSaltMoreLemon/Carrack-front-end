@@ -4,6 +4,7 @@ import './App.css';
 import './containers/Lobby.js'
 import Auth from './containers/Auth.js';
 import Board from './containers/Board.js'
+import Carrack from './game/Carrack.js'
 import { httpRequestJWT } from './helpers.js'
 import { PLAYERS_URL, BASE_URL } from './ENV'
 

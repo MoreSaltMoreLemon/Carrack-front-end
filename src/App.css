@@ -26,5 +26,26 @@
 .board {
   background-color: blue;
   height: 100vh;
-  display: grid;
+}
+
+.cell {
+  height: 100%;
+  width: 100%;
+}
+
+.ship {
+  background-color: red;
+}
+
+.water {
+  background-image: url('/img/seamlessWater.jpg');
+  
+}
+
+.land {
+
+}
+
+.wreck {
+
 }
