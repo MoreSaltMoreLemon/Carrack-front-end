@@ -4,7 +4,8 @@ import './App.css';
 import './containers/Lobby.js'
 import Auth from './containers/Auth.js';
 import Board from './containers/Board.js'
-import { Carrack, Ship } from './game/Carrack.js'
+import { Carrack } from './game/Carrack.js'
+import { Ship } from './game/Ship.js'
 import { httpRequestJWT } from './helpers.js'
 import { PLAYERS_URL, BASE_URL } from './ENV'
 
@@ -13,8 +14,8 @@ class App extends Component {
     super(props)
 
     const carrack = new Carrack(16)
-    const ship1 = new Ship(1, 1, 0, 0, 2, 100, 10)
-    const ship2 = new Ship(2, 2, 15, 15, 2, 100, 10)
+    const ship1 = new Ship(1, 1, 4, 4, 2, 100, 10, carrack)
+    const ship2 = new Ship(2, 2, 11, 8, 2, 100, 10, carrack)
     carrack.placeShip(ship1)
     carrack.placeShip(ship2)
 

@@ -3,6 +3,15 @@ import React, { Component } from 'react'
 
 export default class Cell extends Component {
 
+  handleClick = (e) => {
+    this.props.moveShip(e)
+    // const x = this.props.coord.x
+    // const y = this.props.coord.y
+    // if (this.props.type === 'ship') {
+
+    // }
+  }
+
   render() {
     const gridArea = {
       'grid-area': `${this.props.place}`
@@ -12,7 +21,6 @@ export default class Cell extends Component {
               className={this.props.type}
               style={gridArea}
               occupiedBy={this.props.occupiedBy}
-              onClick={this.props.clickHandler}
             ></div>)
   }
 }

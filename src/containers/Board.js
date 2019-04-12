@@ -1,19 +1,23 @@
 import React, { Component } from 'react'
 import '../App.css'
 import Cell from '../components/Cell'
+import { Ship } from '../components/Ship'
 
 export default class Board extends Component {
-  constructor(props) {
-    super(props)
-    const size = 16
-    const board = [...Array(size)].map(row => 
-                    [...Array(size)].map(cell => 
-                      ({type: 'water', occupiedBy: null })))
-    this.state = { boardSize: size, board }
-
+  constructor() {
+    super()
+    this.state = {
+      selected: false
+    }
   }
 
-  selectCell = (e) => {
+  toggleSelected = (e) => {
+    const selected = !this.state.selected
+    this.setState({ selected })
+    console.log(`selected = ${this.state.selected}`)
+  }
+  
+  moveShip = (e) => {
     e.target.className = "ship"
   }
 
@@ -27,12 +31,29 @@ export default class Board extends Component {
             key={place}
             coord={{x: columnIndex, y: cellIndex}}
             type={cell.type}
-            clickHandler={this.selectCell}
+            //moveShip={this.moveShip}
             place={place}
             occupiedBy={cell.occupiedBy}
           />
         )
       }))
+    )
+  }
+
+  renderShips() {
+    const size = this.props.carrack.size
+    const ships = Object.values(this.props.carrack.ships)
+    return (
+      ships.map(ship => {
+        const place = gridPlacement(ship.x, ship.y, size)
+        return (
+          <Ship
+            key={place}
+            coord={{ x: ship.x, y: ship.y }}
+            place={place}
+          />
+        )
+      })
     )
   }
 
@@ -56,6 +77,7 @@ export default class Board extends Component {
         style={this.boardGrid()}
       >
         {this.renderBoard()}
+        {this.renderShips()}
       </div>
     )
   }
