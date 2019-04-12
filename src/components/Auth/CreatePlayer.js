@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { PLAYERS_URL, GAMES_URL, BASE_URL } from '../ENV'
+import { httpRequest } from '../../helpers'
+import { PLAYERS_URL, BASE_URL } from '../../ENV'
 
-export default class Lobby extends Component {
+export default class CreatePlayer extends Component {
   constructor(props) {
     super(props)
 
@@ -13,7 +14,6 @@ export default class Lobby extends Component {
   }
 
   onChangeHandler = (e) => {
-    // console.log(this.state)
     this.setState({ [e.target.name]: e.target.value })
   }
 
@@ -30,18 +30,18 @@ export default class Lobby extends Component {
   }
 
   createUser(params) {
+    const {username, email, password} = params
     httpRequest(PLAYERS_URL, "post", params)
       .then(response => response.json())
-      .then(json => console.log(json))
-  }
-
-  loginUser(username) {
-    httpRequest(BASE_URL + "/login")
+      .then(json => {
+        console.log("CREATE USER", json)
+        this.props.setPlayer({id: json.player.id, username, email, password})
+      })
   }
 
   render() {
     return (
-      <div className="lobby">
+      <div className="create-player">
         <form>
           <label>Username: 
             <input
@@ -61,7 +61,7 @@ export default class Lobby extends Component {
               onChange={this.onChangeHandler}
             />
           </label>
-          <label>Username: 
+          <label>Password: 
             <input
               type="text"
               name="password"
@@ -76,34 +76,7 @@ export default class Lobby extends Component {
             onClick={this.onSubmitHandler}
           />
         </form>
-        <form className="login">
-          <input
-              type="text"
-              name="username"
-              placeholder="Username"              
-          />         
-          <input
-            type="submit"
-            value="submit"
-            onClick={this.loginHandler}
-          />
-        </form>
       </div>
     )
   }
-}
-
-function httpRequest(url, method='GET', data={}) {
-  const init = {
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    method: method,
-    body: JSON.stringify(data)
-  }
-  if (method.toLowerCase() === 'get') delete init.body;
-  else if (method.toLowerCase() === 'post' && init.body.id) delete init.body.id;
-
-  return fetch( url, init);
 }
