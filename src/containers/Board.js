@@ -7,7 +7,7 @@ export default class Board extends Component {
   constructor() {
     super()
     this.state = {
-      selected: false
+      selected: null
     }
   }
 
@@ -16,7 +16,7 @@ export default class Board extends Component {
     this.setState({ selected })
     console.log(`selected = ${this.state.selected}`)
   }
-  
+
   moveShip = (e) => {
     e.target.className = "ship"
   }
