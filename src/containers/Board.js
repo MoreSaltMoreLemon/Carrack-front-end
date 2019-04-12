@@ -18,9 +18,10 @@ export default class Board extends Component {
   }
 
   renderBoard() {
+    const carrack = this.props.carrack
     return (
-      this.state.board.map((column, columnIndex) => column.map((cell, cellIndex) => {
-        const place = gridPlacement(columnIndex, cellIndex, this.state.boardSize)
+      carrack.board.map((column, columnIndex) => column.map((cell, cellIndex) => {
+        const place = gridPlacement(columnIndex, cellIndex, carrack.size)
         return (
           <Cell
             key={place}
@@ -35,13 +36,15 @@ export default class Board extends Component {
     )
   }
 
-  boardGrid() {
+  boardGrid = () => {
+    // debugger
+    const size = this.props.carrack.size
     return (
       {
         'display': 'grid',
-        'grid-template-row': `repeat(1fr, ${this.state.boardSize - 1})`,
-        'grid-template-column': `repeat(1fr, ${this.state.boardSize - 1})`,
-        'grid-template-areas': `${generateBoardGrid(this.state.boardSize)}`
+        'grid-template-row': `repeat(1fr, ${size - 1})`,
+        'grid-template-column': `repeat(1fr, ${size - 1})`,
+        'grid-template-areas': `${generateBoardGrid(size)}`
       }
     )
   }

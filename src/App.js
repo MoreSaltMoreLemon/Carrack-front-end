@@ -4,7 +4,7 @@ import './App.css';
 import './containers/Lobby.js'
 import Auth from './containers/Auth.js';
 import Board from './containers/Board.js'
-import Carrack from './game/Carrack.js'
+import { Carrack, Ship } from './game/Carrack.js'
 import { httpRequestJWT } from './helpers.js'
 import { PLAYERS_URL, BASE_URL } from './ENV'
 
@@ -12,10 +12,20 @@ class App extends Component {
   constructor(props) {
     super(props)
 
+    const carrack = new Carrack(16)
+    const ship1 = new Ship(1, 1, 0, 0, 2, 100, 10)
+    const ship2 = new Ship(2, 2, 15, 15, 2, 100, 10)
+    carrack.placeShip(ship1)
+    carrack.placeShip(ship2)
+
     this.state = {
       player: {},
-      auth: false
+      auth: false,
+      carrack: carrack
     }
+  }
+
+  componentDidMount() {
   }
 
   setPlayer = (player) => {
@@ -51,7 +61,7 @@ class App extends Component {
             logout={this.logout}
           />
         </header>
-        <Board />
+        <Board carrack={this.state.carrack} />
       </div>
     );
   }
