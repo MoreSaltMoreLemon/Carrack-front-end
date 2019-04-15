@@ -7,11 +7,19 @@ class Carrack {
     this.ships = {}
   }
 
+  deepCopyBoard () {
+    return this.board.map(column => {
+      return column.map(cell => {
+        return Object.assign({}, cell)
+      })
+    })
+  }
+
   placeShip(ship) {
     const x = ship.x
     const y = ship.y
     // debugger
-    //this.board[x][y] = {type: 'ship', occupiedBy: ship.id }
+    this.board[x][y].occupiedBy = ship.id
     this.ships[ship.id] = ship
   }
 

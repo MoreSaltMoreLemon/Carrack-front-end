@@ -12,16 +12,15 @@ class Ship {
   }
 
   movement(x, y) {
-    const board = this.gameObj.board
+    const board = this.gameObj.deepCopyBoard()
     const size = this.gameObj.size
     if (x >= 0 && x < size && y>= 0 && y < size) {
-      board[this.x][this.y] = {type: 'water', occupiedBy: null }
-      board[x][y] = {type: 'ship', occupiedBy: this.id }
+      board[this.x][this.y].occupiedBy = null
+      board[x][y].occupiedBy = this.id
       this.x = x
       this.y = y
-      return true
     }
-    return false
+    return board
   }
 
   select(e) {

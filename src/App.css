@@ -37,6 +37,10 @@
   background-color: red;
 }
 
+.movement-button {
+  background-color: rgba(191,0,0,0.3);
+}
+
 .water {
   background-image: url('/img/seamlessWater.jpg');
   

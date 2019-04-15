@@ -13,9 +13,9 @@ class App extends Component {
   constructor(props) {
     super(props)
 
-    const carrack = new Carrack(16)
-    const ship1 = new Ship(1, 1, 4, 4, 2, 100, 10, carrack)
-    const ship2 = new Ship(2, 2, 11, 8, 2, 100, 10, carrack)
+    const carrack = new Carrack(8)
+    const ship1 = new Ship(1, 1, 2, 2, 2, 100, 10, carrack)
+    const ship2 = new Ship(2, 2, 4, 4, 2, 100, 10, carrack)
     carrack.placeShip(ship1)
     carrack.placeShip(ship2)
 
@@ -26,7 +26,28 @@ class App extends Component {
     }
   }
 
-  componentDidMount() {
+  moveShip(location) {
+
+  }
+
+  // determine what to do based on coords it is given and contents of those coords.
+  shipActions = ({x, y}, ship) => {
+    const cell = this.state.carrack.board[x][y]
+    console.log('Old:', this.state.carrack.board[2][2])
+    if (cell.occupiedBy) {
+      // attack, pass value of occupiedBy
+    } else {
+      // move to that location
+      const newBoard = ship.movement(x, y)
+      const updatedState = Object.assign({}, this.state.carrack)
+      updatedState.board = newBoard
+      console.log('New:', newBoard[2][2])
+      //debugger
+      this.setState({carrack: {...this.state.carrack, board: newBoard} })
+    }
+  }
+
+  componentDidMount () {
   }
 
   setPlayer = (player) => {
@@ -62,7 +83,7 @@ class App extends Component {
             logout={this.logout}
           />
         </header>
-        <Board carrack={this.state.carrack} />
+        <Board carrack={this.state.carrack} shipActions={this.shipActions} />
       </div>
     );
   }

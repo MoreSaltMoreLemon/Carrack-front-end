@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react'
 import '../App.css'
+import { gridPlacement, generateBoardGrid } from '../helpers'
 import Cell from '../components/Cell'
 import { Ship } from '../components/Ship'
-import MoveButton from '../components/MoveButton'
 
 export default class Board extends Component {
   constructor() {
@@ -48,28 +48,17 @@ export default class Board extends Component {
       ships.map(ship => {
         const place = gridPlacement(ship.x, ship.y, size)
         const selected = this.state.selected === ship.id
-        let moveButtons
-        if (selected) {
-          moveButtons = (
-            <Fragment>
-              <MoveButton place={gridPlacement(ship.x - 1, ship.y, size)} />
-              <MoveButton place={gridPlacement(ship.x + 1, ship.y, size)} />
-              <MoveButton place={gridPlacement(ship.x, ship.y - 1, size)} />
-              <MoveButton place={gridPlacement(ship.x, ship.y + 1, size)} />
-            </Fragment>
-          )
-        }
 
         return (
-          <Fragment>
           <Ship
             key={place}
-            coord={{ x: ship.x, y: ship.y }}
+            ship={ship}
             place={place}
+            size={size}
+            selected={selected}
             toggleSelected={() => this.toggleSelected(ship.id)}
+            shipActions={this.props.shipActions}
           />
-          { selected ? moveButtons : null }
-          </Fragment>        
         )
       })
     )
@@ -99,32 +88,4 @@ export default class Board extends Component {
       </div>
     )
   }
-}
-
-function gridPlacement(x, y, size) {
-  const abc = 'abcdefghijklmnopqrstuvwxyz'
-  let placement = ''
-  let idx = (y * size) + x
-
-  while (idx >= 0) {
-    placement += abc[idx % 26]
-    idx -= 26
-  }
-
-  return placement
-}
-
-function generateBoardGrid(size) {
-  const columns = []
-
-  for (let c = 0; c < size; c++) {
-    let row = gridPlacement(0, c, size)
-    for (let r = 1; r < size; r++) {
-      row += ' ' + gridPlacement(r, c, size)
-    }
-    row = `"${row}"`
-    columns.push(row)
-
-  }
-  return columns.reverse().join(" ")
 }

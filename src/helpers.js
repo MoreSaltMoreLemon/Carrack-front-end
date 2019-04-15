@@ -28,3 +28,31 @@ export function httpRequestJWT(url, method='GET', jwt, data={}) {
 
   return fetch( url, init);
 }
+
+export function gridPlacement(x, y, size) {
+  const abc = 'abcdefghijklmnopqrstuvwxyz'
+  let placement = ''
+  let idx = (y * size) + x
+
+  while (idx >= 0) {
+    placement += abc[idx % 26]
+    idx -= 26
+  }
+
+  return placement
+}
+
+export function generateBoardGrid(size) {
+  const columns = []
+
+  for (let c = 0; c < size; c++) {
+    let row = gridPlacement(0, c, size)
+    for (let r = 1; r < size; r++) {
+      row += ' ' + gridPlacement(r, c, size)
+    }
+    row = `"${row}"`
+    columns.push(row)
+
+  }
+  return columns.reverse().join(" ")
+}
