@@ -3,24 +3,10 @@ import '../App.css'
 import { gridPlacement, generateBoardGrid } from '../helpers'
 import Cell from '../components/Cell'
 import { Ship } from '../components/Ship'
+import Explosion from '../components/Explosion'
+import SunkenShip from '../components/SunkenShip'
 
 export default class Board extends Component {
-  constructor() {
-    super()
-    this.state = {
-      selected: null
-    }
-  }
-
-  toggleSelected = (id) => {
-    const selected = id === this.state.selected ? null : id
-
-    this.setState({ selected })
-  }
-
-  moveShip = (e) => {
-    e.target.className = "ship"
-  }
 
   renderBoard() {
     const carrack = this.props.carrack
@@ -32,7 +18,6 @@ export default class Board extends Component {
             key={place}
             coord={{x: columnIndex, y: cellIndex}}
             type={cell.type}
-            //moveShip={this.moveShip}
             place={place}
             occupiedBy={cell.occupiedBy}
           />
@@ -47,21 +32,30 @@ export default class Board extends Component {
     return (
       ships.map(ship => {
         const place = gridPlacement(ship.x, ship.y, size)
-        const selected = this.state.selected === ship.id
 
-        return (
-          <Ship
-            key={place}
-            ship={ship}
-            place={place}
-            size={size}
-            selected={selected}
-            toggleSelected={() => this.toggleSelected(ship.id)}
-            shipActions={this.props.shipActions}
-          />
-        )
+        if (ship.sunk) {
+          return (<SunkenShip key={place} place={place} />)
+        } else {
+          const selected = this.props.selected === ship.id
+
+          return (
+            <Ship
+              key={place}
+              ship={ship}
+              place={place}
+              size={size}
+              selected={selected}
+              toggleSelected={() => this.props.toggleSelected(ship.id)}
+              shipActions={this.props.shipActions}
+            />
+          )
+        }
       })
     )
+  }
+
+  renderExplosion() {
+
   }
 
   boardGrid = () => {
@@ -85,6 +79,10 @@ export default class Board extends Component {
       >
         {this.renderBoard()}
         {this.renderShips()}
+        <Explosion 
+          explosionAt={this.props.explosionAt}
+          size={this.props.carrack.size}
+        />
       </div>
     )
   }

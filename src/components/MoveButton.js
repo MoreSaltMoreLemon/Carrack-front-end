@@ -15,7 +15,7 @@ export default class MoveButton extends Component {
     if (x >= 0 && x < size && y>= 0 && y < size) {
       return (
         <div 
-            className='movement-button'
+            className='movement-button selected-ship'
             style={gridArea}
             onClick={this.actOnPosition}
           ></div>)

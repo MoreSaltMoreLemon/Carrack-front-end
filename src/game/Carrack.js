@@ -7,8 +7,8 @@ class Carrack {
     this.ships = {}
   }
 
-  deepCopyBoard () {
-    return this.board.map(column => {
+  deepCopyBoard (board) {
+    return board.map(column => {
       return column.map(cell => {
         return Object.assign({}, cell)
       })

@@ -3,6 +3,13 @@ import React, { Component, Fragment } from 'react'
 import MoveButton from './MoveButton'
 
 class Ship extends Component {
+  constructor(props) {
+    super(props) 
+
+    this.state = {
+      showStats: false
+    }
+  }
   renderMoveButtons () {
     const ship = this.props.ship
     const size = this.props.size
@@ -16,20 +23,35 @@ class Ship extends Component {
     )
   }
 
+  toggleRenderStats = (e) => {
+    this.setState({ showStats: !this.state.showStats })
+  }
+
+
+
   render () {
     const gridArea = {
-      'grid-area': `${this.props.place}`
+      'grid-area': `${this.props.place}`,
+      'position': 'relative'
     }
-    // console.log("CELL", gridArea)
+    const selectedClass = this.props.selected ? 'selected-ship' : ''
+    const teamClass = this.props.ship.player % 2 === 0 ? 'team2' : 'team1'
+    const sunkenClass = this.props.ship.sunk ? 'sunken-ship' : selectedClass + ' ' + teamClass
+    const shipDirectionClass = this.props.ship.direction
+    const className = `ship ${shipDirectionClass} ${sunkenClass}`
+
     return (
       <Fragment>
         <div 
-              className='ship'
+              className={className}
               style={gridArea}
               onClick={this.props.toggleSelected}
+              onMouseOver={this.toggleRenderStats}
+              onMouseLeave={this.toggleRenderStats}
         >
+        { this.state.showStats ? <span className='ship-stats'>{Math.ceil(this.props.ship.hp)}</span> : null }
         </div>
-        { (this.props.selected) ? this.renderMoveButtons() : null }
+        { this.props.selected && !this.props.ship.sunk ? this.renderMoveButtons() : null }
       </Fragment>)
   }
 }

@@ -34,7 +34,85 @@
 }
 
 .ship {
-  background-color: red;
+  background-image: url('/img/blueship.png');
+  background-size: 400%; 
+  border-radius: 25%;
+}
+
+.up {
+  background-position: 0px 120px;
+}
+.down {
+  background-position: 0px 0px;
+}
+.left {
+  background-position: -10px 370px;
+}
+.right {
+  background-position: 10px 250px;
+}
+
+
+.explosion {
+  /* animation: explosion steps(20) .3s;  */
+  background-image: url('/img/explosion1.png');
+  background-size: 100%;  
+}
+
+@keyframes explosion {
+  from {background-position: 0;}
+  to {background-position: 405px;}
+}
+
+
+
+/* @keyframes explosion {
+  0% { background-position: 0px 0px; }
+  5% { background-position: -130px 0px; }
+  10% { background-position: -265px 0px; }
+  15% { background-position: -400px 0px; }
+  20% { background-position: -533px 0px; }
+  25% { background-position: -668px 0px; }
+  30% { background-position: -800px 0px; }
+  35% { background-position: 0px -135px; }
+  40% { background-position: -130px -135px; }
+  45% { background-position: -265px -135px; }
+  50% { background-position: -400px -135px; }
+  55% { background-position: -533px -135px; }
+  60% { background-position: -668px -135px; }
+  65% { background-position: -800px -135px; }
+  70% { background-position: 0px -270px; }
+  75% { background-position: -130px -270px; }
+  80% { background-position: -265px -270px; }
+  85% { background-position: -400px -270px; }
+  90% { background-position: -533px -270px; }
+  95% { background-position: -668px -270px; }
+  /* 100% { background-position: -800px -270px; } */
+/* } */
+
+
+.selected-ship {
+  z-index: 4;
+}
+
+.sunken-ship {
+  background-color: black;
+}
+
+.ship-stats {
+  font-size: 20px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: red;
+}
+
+.team1 {
+  background-color: rgba(191,0,0,0.3);
+}
+
+.team2 {
+  background-color: rgba(0,0,191,0.3);
 }
 
 .movement-button {

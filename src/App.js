@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import './containers/Lobby.js'
 import Auth from './containers/Auth.js';
@@ -14,40 +13,83 @@ class App extends Component {
     super(props)
 
     const carrack = new Carrack(8)
-    const ship1 = new Ship(1, 1, 2, 2, 2, 100, 10, carrack)
-    const ship2 = new Ship(2, 2, 4, 4, 2, 100, 10, carrack)
+    const ship1 = new Ship(1, 1, 2, 2, 'up', 2, 10, 10, carrack)
+    const ship2 = new Ship(2, 2, 4, 4, 'down', 2, 10, 10, carrack)
+    const ship3 = new Ship(3, 2, 5, 5, 'down', 2, 10, 10, carrack)
     carrack.placeShip(ship1)
     carrack.placeShip(ship2)
+    carrack.placeShip(ship3)
 
     this.state = {
       player: {},
       auth: false,
-      carrack: carrack
+      carrack: carrack,
+      selected: null,
+      turn: 0,
+      playerMoves: 3,
+      explosionAt: null
     }
   }
 
-  moveShip(location) {
+  moveShip(x, y, ship) {
+    const oldBoard = this.state.carrack.board
+    const newBoard = ship.movement(x, y, oldBoard)
+    const updatedState = Object.assign({}, this.state.carrack)
+    updatedState.board = newBoard
+  
+    this.setState({carrack: {...this.state.carrack, board: newBoard}})
+  }
 
+  attackShip(x, y, ship, enemyShip) {
+    const success = ship.attack(enemyShip)
+    if (success) {
+      this.startExplosion(x, y)
+    }
+  }
+
+  startExplosion(x, y) {
+    this.setState({ explosionAt: {x, y} })
+    setTimeout(this.stopExplosion.bind(this), 500)
+  }
+
+  stopExplosion() {
+    this.setState({ explosionAt: null })
   }
 
   // determine what to do based on coords it is given and contents of those coords.
   shipActions = ({x, y}, ship) => {
     const cell = this.state.carrack.board[x][y]
-    console.log('Old:', this.state.carrack.board[2][2])
     if (cell.occupiedBy) {
-      // attack, pass value of occupiedBy
+      const occupyingShip = this.state.carrack.ships[cell.occupiedBy]
+      if (occupyingShip.player !== ship.player) {
+        this.attackShip(x, y, ship, occupyingShip)
+      }
     } else {
-      // move to that location
-      const newBoard = ship.movement(x, y)
-      const updatedState = Object.assign({}, this.state.carrack)
-      updatedState.board = newBoard
-      console.log('New:', newBoard[2][2])
-      //debugger
-      this.setState({carrack: {...this.state.carrack, board: newBoard} })
+      this.moveShip(x, y, ship)
+    }
+    if (this.state.playerMoves === 1) this.nextTurn()
+    else this.setState({ playerMoves: this.state.playerMoves - 1 })
+  }
+
+  nextTurn() {
+    if (this.remainingFloatingShips(this.remainingEnemyShips()).length > 0) {
+      this.setState({ turn: this.state.turn + 1, playerMoves: 3, selected: null })
+    } else {
+      this.endGame()
     }
   }
 
-  componentDidMount () {
+  remainingEnemyShips() {
+    const ships = Object.values(this.state.carrack.ships)
+    return ships.filter(ship => ship.player % 2 !== this.state.turn % 2)
+  }
+
+  remainingFloatingShips(ships) {
+    return ships.filter(ship => !ship.sunk)
+  }
+
+  endGame() {
+    alert("GAME OVER MAN, GAME OVER")
   }
 
   setPlayer = (player) => {
@@ -71,6 +113,19 @@ class App extends Component {
       BASE_URL + "/api/v1/players/" + id, 'put', auth, {player: {email, id, username, password}} )
   }
 
+  toggleSelected = (id) => {
+    const shipPlayer = this.state.carrack.ships[id].player
+    const turnPlayer = this.state.turn % 2 === 0 ? 2 : 1
+    console.log("WHOS TURN IS IT", shipPlayer, turnPlayer)
+    if (shipPlayer === turnPlayer) {
+      const selected = id === this.state.selected ? null : id
+
+      this.setState({ selected })
+    } else {
+      console.log("NOT YOUR TURN")
+    }
+  }
+
   render() {
     return (
       <div className="App">
@@ -83,7 +138,14 @@ class App extends Component {
             logout={this.logout}
           />
         </header>
-        <Board carrack={this.state.carrack} shipActions={this.shipActions} />
+        <Board 
+          carrack={this.state.carrack} 
+          turn={this.state.turn} 
+          selected={this.state.selected}
+          shipActions={this.shipActions} 
+          explosionAt={this.state.explosionAt}
+          toggleSelected={this.toggleSelected}
+        />
       </div>
     );
   }
