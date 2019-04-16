@@ -1,5 +1,6 @@
-import { httpRequest, httpRequestJWT } from './helpers'
+import { httpRequestJWT } from './helpers'
 import { parse, stringify } from 'flatted/esm'
+import { GAMES_URL } from './ENV'
 
 function exportTurn (gameObj, turn, auth) {
   // Stringify gameObj.
@@ -35,12 +36,23 @@ function instantiateTurn () {
   console.log('instantiate turn')
 }
 
-function winGame(auth) {
-  //
+function winGame(auth) {}
+
+function exitGame(auth) {}
+
+function activeGames(auth) {
+  httpRequestJWT(GAMES_URL)
 }
 
-function exitGame(auth) {
-  //
-}
+function availableGames(auth) {}
 
-export { importTurn, exportTurn, joinGame, winGame, exitGame }
+
+export { 
+  importTurn, 
+  exportTurn, 
+  joinGame, 
+  winGame, 
+  exitGame, 
+  activeGames, 
+  availableGames 
+}
