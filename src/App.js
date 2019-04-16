@@ -6,6 +6,7 @@ import Board from './containers/Board.js'
 import { Carrack } from './game/Carrack.js'
 import { Ship } from './game/Ship.js'
 import { httpRequestJWT } from './helpers.js'
+import { importTurn, exportTurn, newGame } from './dataHandlers.js'
 import { PLAYERS_URL, BASE_URL } from './ENV'
 
 class App extends Component {
@@ -74,6 +75,7 @@ class App extends Component {
   }
 
   nextTurn() {
+    exportTurn(this.state.carrack, this.state.turn)
     if (this.remainingFloatingShips(this.remainingEnemyShips()).length > 0) {
       this.setState({ turn: this.state.turn + 1, playerMoves: 3, selected: null })
     } else {
