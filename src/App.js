@@ -16,9 +16,11 @@ class App extends Component {
     const ship1 = new Ship(1, 1, 2, 2, 'up', 2, 10, 10, carrack)
     const ship2 = new Ship(2, 2, 4, 4, 'down', 2, 10, 10, carrack)
     const ship3 = new Ship(3, 2, 5, 5, 'down', 2, 10, 10, carrack)
+    const ship4 = new Ship(4, 1, 3, 3, 'up', 2, 10, 10, carrack)
     carrack.placeShip(ship1)
     carrack.placeShip(ship2)
     carrack.placeShip(ship3)
+    carrack.placeShip(ship4)
 
     this.state = {
       player: {},

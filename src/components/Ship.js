@@ -36,7 +36,7 @@ class Ship extends Component {
     }
     const selectedClass = this.props.selected ? 'selected-ship' : ''
     const teamClass = this.props.ship.player % 2 === 0 ? 'team2' : 'team1'
-    const sunkenClass = this.props.ship.sunk ? 'sunken-ship' : selectedClass + ' ' + teamClass
+    const sunkenClass = this.props.ship.sunk ? 'sunk' : selectedClass + ' ' + teamClass
     const shipDirectionClass = this.props.ship.direction
     const className = `ship ${shipDirectionClass} ${sunkenClass}`
 

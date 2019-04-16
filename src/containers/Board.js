@@ -33,9 +33,9 @@ export default class Board extends Component {
       ships.map(ship => {
         const place = gridPlacement(ship.x, ship.y, size)
 
-        if (ship.sunk) {
-          return (<SunkenShip key={place} place={place} />)
-        } else {
+        // if (ship.sunk) {
+        //   return (<SunkenShip key={place} place={place} />)
+        // } else {
           const selected = this.props.selected === ship.id
 
           return (
@@ -49,7 +49,7 @@ export default class Board extends Component {
               shipActions={this.props.shipActions}
             />
           )
-        }
+        // }
       })
     )
   }
