@@ -34,29 +34,56 @@
 }
 
 .ship {
-  background-image: url('/img/blueship.png');
-  background-size: 400%; 
+  background-size: 100%;
+  /* background: contain; */
+  background-repeat: no-repeat;
   border-radius: 25%;
 }
 
-.up {
-  background-position: 0px 120px;
+.up, .down, .right, .left {
+  position: relative;
 }
-.down {
-  background-position: 0px 0px;
+
+.up:after, .down:after, .right:after, .left:after {
+  display: block;
+  position: absolute;
+  text-align: left;
+  content: ' ';
+  width: 208px;
+  height: 208px;
+  top: calc(50% - 208px * 0.5);
+  left: calc(50% - 208px * 0.5);
 }
-.left {
-  background-position: -10px 370px;
+.up:after {
+  background-image: url('/img/blueship_up.png');
 }
-.right {
-  background-position: 10px 250px;
+.down:after {
+  background-image: url('/img/blueship_down.png');
+}
+.left:after {
+  background-image: url('/img/blueship_left.png');
+}
+.right:after {
+  background-image: url('/img/blueship_right.png');
 }
 
 
 .explosion {
-  /* animation: explosion steps(20) .3s;  */
+  position: relative;
+  z-index: 10;
+}
+
+.explosion:after {
+  display: block;
+  position: absolute;
+  text-align: left;
+  content: ' ';
+  width: 64px;
+  height: 64px;
+  top: calc(50% - 64px * 0.5);
+  left: calc(50% - 64px * 0.5);
   background-image: url('/img/explosion1.png');
-  background-size: 100%;  
+  background-size: 100%;
 }
 
 @keyframes explosion {
