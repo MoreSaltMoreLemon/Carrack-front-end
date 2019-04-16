@@ -11,7 +11,7 @@ function exportTurn (gameObj, turn) {
 
 function importTurn (turn) {
   // Fetch request to server.
-  // Check to see if a new turn exists.
+  // Check to see if a new turn exists. (wait with interval)
   // If new turn, pulls down data.
   // Parses result.
   // Translate data into new Ship and new Carrack.
@@ -20,8 +20,8 @@ function importTurn (turn) {
   instantiateTurn()
 }
 
-function newGame () {
-  // Called by componentDidMount in App.
+function joinGame () {
+  // Called by App when user joins game.
 
   console.log('new game')
   instantiateTurn()
@@ -31,8 +31,16 @@ function instantiateTurn () {
   // Accept standard turn format.
   // Translate data into Carrack and Ship objects.
   // Returns result for further processing on server.
-  
+
   console.log('instantiate turn')
 }
 
-export { importTurn, exportTurn, newGame }
+function winGame() {
+  //
+}
+
+function exitGame() {
+  //
+}
+
+export { importTurn, exportTurn, joinGame, winGame, exitGame }

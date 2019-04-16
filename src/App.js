@@ -6,7 +6,7 @@ import Board from './containers/Board.js'
 import { Carrack } from './game/Carrack.js'
 import { Ship } from './game/Ship.js'
 import { httpRequestJWT } from './helpers.js'
-import { importTurn, exportTurn, newGame } from './dataHandlers.js'
+import { importTurn, exportTurn, joinGame, winGame, exitGame } from './dataHandlers.js'
 import { PLAYERS_URL, BASE_URL } from './ENV'
 
 class App extends Component {
