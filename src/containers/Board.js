@@ -64,9 +64,9 @@ export default class Board extends Component {
     return (
       {
         'display': 'grid',
-        'grid-template-row': `repeat(1fr, ${size - 1})`,
-        'grid-template-column': `repeat(1fr, ${size - 1})`,
-        'grid-template-areas': `${generateBoardGrid(size)}`
+        'gridTemplateRow': `repeat(1fr, ${size - 1})`,
+        'gridTemplateColumn': `repeat(1fr, ${size - 1})`,
+        'gridTemplateAreas': `${generateBoardGrid(size)}`
       }
     )
   }
