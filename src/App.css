@@ -40,6 +40,10 @@
   border-radius: 100%;
 }
 
+.selected-ship {
+  z-index: 4;
+}
+
 .up, .down, .right, .left {
   position: relative;
 }
@@ -85,9 +89,7 @@
 }
 
 
-.selected-ship {
-  z-index: 4;
-}
+
 
 
 

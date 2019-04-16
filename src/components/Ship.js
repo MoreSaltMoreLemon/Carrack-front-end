@@ -31,7 +31,7 @@ class Ship extends Component {
 
   render () {
     const gridArea = {
-      'grid-area': `${this.props.place}`,
+      'gridArea': `${this.props.place}`,
       'position': 'relative'
     }
     const selectedClass = this.props.selected ? 'selected-ship' : ''
