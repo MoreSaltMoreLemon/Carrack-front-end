@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { httpRequest } from '../../helpers'
-import { PLAYERS_URL, BASE_URL } from '../../ENV'
+import { BASE_URL } from '../../ENV'
 
 export default class LoginPlayer extends Component {
   constructor(props) {
@@ -10,6 +10,10 @@ export default class LoginPlayer extends Component {
       username: '',
       password: ''
     }
+  }
+
+  componentDidMount() {
+    this.loginUser({username: 'allen', password: 'password'})
   }
 
   onChangeHandler = (e) => {
@@ -28,10 +32,13 @@ export default class LoginPlayer extends Component {
   }
 
   loginUser(params) {
-    const {username, email, password} = params
-    httpRequest(BASE_URL + '/api/v1/login/', "post", {player: {...params}})
+    // const {username, email, password} = params
+    httpRequest(BASE_URL + '/login', "post", {player: {...params}})
       .then(response => response.json())
-      .then(auth => this.props.setAuth(auth))
+      .then(auth => {
+        console.log(auth)
+        this.props.setAuth(auth)
+      })
   }
 
 

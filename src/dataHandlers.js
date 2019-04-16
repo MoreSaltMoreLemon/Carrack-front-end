@@ -1,7 +1,7 @@
 import { httpRequest, httpRequestJWT } from './helpers'
 import { parse, stringify } from 'flatted/esm'
 
-function exportTurn (gameObj, turn) {
+function exportTurn (gameObj, turn, auth) {
   // Stringify gameObj.
   // Combine JSON and turn into one object.
   // Post resource creation during "new game".
@@ -9,7 +9,7 @@ function exportTurn (gameObj, turn) {
   console.log(parse(stringify(gameObj)))
 }
 
-function importTurn (turn) {
+function importTurn (turn, auth) {
   // Fetch request to server.
   // Check to see if a new turn exists. (wait with interval)
   // If new turn, pulls down data.
@@ -20,7 +20,7 @@ function importTurn (turn) {
   instantiateTurn()
 }
 
-function joinGame () {
+function joinGame (auth) {
   // Called by App when user joins game.
 
   console.log('new game')
@@ -35,11 +35,11 @@ function instantiateTurn () {
   console.log('instantiate turn')
 }
 
-function winGame() {
+function winGame(auth) {
   //
 }
 
-function exitGame() {
+function exitGame(auth) {
   //
 }
 

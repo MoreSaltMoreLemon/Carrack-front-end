@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-import './containers/Lobby.js'
 import Auth from './containers/Auth.js';
 import Board from './containers/Board.js'
+import Lobby from './components/Lobby/Lobby.js'
 import { Carrack } from './game/Carrack.js'
 import { Ship } from './game/Ship.js'
 import { httpRequestJWT } from './helpers.js'
@@ -26,7 +26,7 @@ class App extends Component {
     this.state = {
       player: {},
       auth: false,
-      carrack: carrack,
+      carrack:  carrack,
       selected: null,
       turn: 0,
       playerMoves: 3,
@@ -142,14 +142,18 @@ class App extends Component {
             logout={this.logout}
           />
         </header>
-        <Board 
-          carrack={this.state.carrack} 
-          turn={this.state.turn} 
-          selected={this.state.selected}
-          shipActions={this.shipActions} 
-          explosionAt={this.state.explosionAt}
-          toggleSelected={this.toggleSelected}
-        />
+        { this.state.carrack ? 
+          <Board 
+            carrack={this.state.carrack} 
+            turn={this.state.turn} 
+            selected={this.state.selected}
+            shipActions={this.shipActions} 
+            explosionAt={this.state.explosionAt}
+            toggleSelected={this.toggleSelected}
+          />
+          :
+          <Lobby />
+        }
       </div>
     );
   }

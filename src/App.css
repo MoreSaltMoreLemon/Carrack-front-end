@@ -124,7 +124,7 @@
 .move-left   { transform: rotate(90deg); }
 .move-right  { transform: rotate(270deg); }
 
-.water {
+.water, .lobby {
   background-image: url('/img/waterOk_blur.png');
   
 }

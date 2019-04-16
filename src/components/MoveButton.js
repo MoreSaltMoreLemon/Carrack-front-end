@@ -22,7 +22,7 @@ export default class MoveButton extends Component {
     
     const size = this.props.size
     const gridArea = {
-      'grid-area': gridPlacement(x, y, size)
+      'gridArea': gridPlacement(x, y, size)
     }
     if (x >= 0 && x < size && y>= 0 && y < size) {
       return (

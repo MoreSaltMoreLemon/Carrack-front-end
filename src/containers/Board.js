@@ -1,10 +1,9 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import '../App.css'
 import { gridPlacement, generateBoardGrid } from '../helpers'
 import Cell from '../components/Cell'
 import { Ship } from '../components/Ship'
 import Explosion from '../components/Explosion'
-import SunkenShip from '../components/SunkenShip'
 
 export default class Board extends Component {
 
@@ -32,10 +31,6 @@ export default class Board extends Component {
     return (
       ships.map(ship => {
         const place = gridPlacement(ship.x, ship.y, size)
-
-        // if (ship.sunk) {
-        //   return (<SunkenShip key={place} place={place} />)
-        // } else {
           const selected = this.props.selected === ship.id
 
           return (

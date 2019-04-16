@@ -15,6 +15,8 @@ export default class Auth extends Component {
     }
   }
 
+  
+
   toggleShow = (e) => {
     const toggleTarget = e.target.id
     const state = this.state
@@ -33,13 +35,14 @@ export default class Auth extends Component {
             <CreatePlayer setPlayer={this.props.setPlayer}/> :
             <div id='showCreateUser' onClick={this.toggleShow}>Create New User</div>
         }
-        { showLogin ? 
+         
           <LoginPlayer 
                 player={this.props.player}
                 setPlayer={this.props.setPlayer}
                 setAuth={this.props.setAuth}
                 auth={this.props.auth}
               /> :
+        { showLogin ? null :
             <div id='showLogin' onClick={this.toggleShow}>Login</div> 
         }
         { showLogout ? 
