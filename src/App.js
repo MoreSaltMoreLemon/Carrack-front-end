@@ -15,25 +15,32 @@ class App extends Component {
   constructor(props) {
     super(props)
 
-    // const carrack = new Carrack(8)
-    // const ship1 = new Ship(1, 1, 2, 2, 'up', 2, 10, 10, carrack)
-    // const ship2 = new Ship(2, 2, 4, 4, 'down', 2, 10, 10, carrack)
-    // const ship3 = new Ship(3, 2, 5, 5, 'down', 2, 10, 10, carrack)
-    // const ship4 = new Ship(4, 1, 3, 3, 'up', 2, 10, 10, carrack)
-    // carrack.placeShip(ship1)
-    // carrack.placeShip(ship2)
-    // carrack.placeShip(ship3)
-    // carrack.placeShip(ship4)
+    const carrack = new Carrack(12)
+    const player1_ship1 = new Ship(1, 1, 2, 2, 'up', 2, 10, 10, carrack)
+    const player1_ship2 = new Ship(2, 1, 4, 3, 'up', 2, 10, 10, carrack)
+    const player1_ship3 = new Ship(3, 1, 6, 2, 'up', 2, 10, 10, carrack)
+    const player2_ship1 = new Ship(4, 2, 5, 10, 'down', 2, 10, 10, carrack)
+    const player2_ship2 = new Ship(5, 2, 7, 9, 'down', 2, 10, 10, carrack)
+    const player2_ship3 = new Ship(6, 2, 9, 10, 'down', 2, 10, 10, carrack)
+
+    carrack.placeShip(player1_ship1)
+    carrack.placeShip(player1_ship2)
+    carrack.placeShip(player1_ship3)
+    carrack.placeShip(player2_ship1)
+    carrack.placeShip(player2_ship2)
+    carrack.placeShip(player2_ship3)
 
     this.state = {
       player: {},
       auth: false,
-      carrack: null, // carrack,
+      carrack: carrack,
       selected: null,
       turn: 0,
       playerMoves: 3,
       explosionAt: null
     }
+
+    exportTurn(this.state.carrack, this.state.turn, this.state.auth.jwt)
   }
 
   moveShip(x, y, ship) {
