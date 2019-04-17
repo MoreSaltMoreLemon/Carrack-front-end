@@ -51,6 +51,10 @@ export default class Lobby extends Component {
     const jwt = this.props.auth.jwt
     const opponent_id = id
     createGame(player_id, opponent_id, jwt)
+      .then(game => {
+        console.log("GAME", game)
+        this.props.importTurn(game)
+      })
   }
 
   render() {

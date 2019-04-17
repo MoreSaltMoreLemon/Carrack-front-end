@@ -1,10 +1,18 @@
+import { Ship } from './Ship'
+
 class Carrack {
-  constructor(size) {
-    this.size = size
-    this.board = [...Array(size)].map(row => 
-                  [...Array(size)].map(cell => 
-                    ({type: 'water', occupiedBy: null })))
-    this.ships = {}
+  // constructor(size) {
+  //   this.size = size
+  //   this.board = [...Array(size)].map(row => 
+  //                 [...Array(size)].map(cell => 
+  //                   ({type: 'water', occupiedBy: null })))
+  //   this.ships = {}
+  // }
+  constructor(gameState = { size: 12, board: [], ships: []}) {
+    console.log(gameState)
+    this.size = gameState.size
+    this.board = gameState.board
+    this.ships = this.placeShips(gameState.ships)
   }
 
   deepCopyBoard (board) {
@@ -12,6 +20,15 @@ class Carrack {
       return column.map(cell => {
         return Object.assign({}, cell)
       })
+    })
+  }
+
+  placeShips(ships) {
+    console.log(ships)
+    ships = Object.values(ships)
+    return ships.map(shipProperties => {
+      shipProperties.gameObj = this
+      return new Ship(shipProperties)
     })
   }
 
