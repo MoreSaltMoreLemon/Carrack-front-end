@@ -4,20 +4,12 @@ import { GAMES_URL, BASE_URL } from './ENV'
 import { Carrack } from './game/Carrack'
 
 
-<<<<<<< HEAD
-function exportTurn (gameObj, turn, auth) {
-=======
 function exportTurn (gameState, jwt) {
->>>>>>> refs/remotes/origin/master
   // Stringify gameObj.
   // Combine JSON and turn into one object.
   // Post resource creation during "new game".
   // Put to new_turn route.
 
-<<<<<<< HEAD
-  // httpRequestGame(`${BASE_URL}/game/export_turn`, 'PUT', auth.jwt, gameData)
-  // console.log(parse(JSON.stringify(gameObj)))
-=======
   // const gameData = {
   //   //id: game_id
   //   player1_id,
@@ -34,7 +26,6 @@ function exportTurn (gameState, jwt) {
 
   // httpRequestGame(`${BASE_URL}/game/export_turn`, 'PUT', jwt, gameData)
   console.log(stringify(initialGame))
->>>>>>> refs/remotes/origin/master
 }
 
 function importTurn (turn, jwt) {
