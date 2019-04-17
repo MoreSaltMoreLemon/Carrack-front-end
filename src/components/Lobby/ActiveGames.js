@@ -16,9 +16,12 @@ export default class ActiveGames extends Component {
 
   render() {
     return (
-      <ul>
-        {this.renderActiveGames()}
-      </ul>
+      <div>
+        <h1>Active Games</h1>
+        <ul>
+          {this.renderActiveGames()}
+        </ul>
+      </div>
     )
   }
 }

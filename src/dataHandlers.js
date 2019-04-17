@@ -1,6 +1,8 @@
 import { httpRequestJWT, httpRequestGame } from './helpers'
 import { parse, stringify } from 'flatted/esm'
 import { GAMES_URL, BASE_URL } from './ENV'
+import { Carrack } from './game/Carrack'
+
 
 function exportTurn (gameState, jwt) {
   // Stringify gameObj.
@@ -48,20 +50,22 @@ function importTurn (turn, jwt) {
 
 function createGame (player_id, opponent_id, jwt) {
   const activeGamesURL = BASE_URL + '/game/create'
-  httpRequestJWT(activeGamesURL, 'post', jwt, { game: { player_id, opponent_id }})
+  return httpRequestJWT(activeGamesURL, 'post', jwt, { game: { player_id, opponent_id }})
     .then(r => r.json())
-    .then(json => {
-      json.game_state = parse(json.game_state)
-      console.log(json)
+    .then(game => {
+      const game_state = (parse(game.game_state)).game_state
+      
+      game.game_state = game_state
+      return instantiateTurn(game)
     })
 }
 
-function instantiateTurn () {
-  // Accept standard turn format.
-  // Translate data into Carrack and Ship objects.
-  // Returns result for further processing on server.
-
-  console.log('instantiate turn')
+function instantiateTurn (game) {
+  const carrack = new Carrack(game.game_state)
+  delete game.game_state
+  game.carrack = carrack
+  
+  return game
 }
 
 function availableTurn(id, turn, jwt) {}

@@ -9,7 +9,6 @@ export default class AvailablePlayer extends Component {
     return (
       <li onClick={this.createGame}>
         <p>{this.props.player.username}</p>
-        {/* <p>{this.props.game.id}</p> */}
       </li>
     )
   }

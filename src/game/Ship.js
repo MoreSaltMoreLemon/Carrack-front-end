@@ -1,16 +1,16 @@
 
 class Ship {
-  constructor(id, player, x, y, direction, moves, hp, damage, gameObj) {
-    this.id = id
-    this.player = player
-    this.x = x
-    this.y = y
-    this.direction = direction
-    this.moves = moves
-    this.hp = hp
-    this.damage = damage
-    this.sunk = false
-    this.gameObj = gameObj
+  constructor(shipState = {id: 0, player: 0, x: 0, y: 0, direction: 'left', moves: 3, hp: 0, damage: 0, gameObj: null}) {
+    this.id = shipState.id
+    this.player = shipState.player
+    this.x = shipState.x
+    this.y = shipState.y
+    this.direction = shipState.direction
+    this.moves = shipState.moves
+    this.hp = shipState.hp
+    this.damage = shipState.damage
+    this.sunk = shipState.false
+    this.gameObj = shipState.gameObj
   }
 
   movement(x, y, prevBoard) {
