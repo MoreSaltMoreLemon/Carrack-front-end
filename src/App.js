@@ -46,8 +46,6 @@ class App extends Component {
       playerMoves: 3,
       explosionAt: null
     }
-
-    exportTurn(this.state, this.state.auth.jwt)
   }
 
   moveShip(x, y, ship) {
@@ -91,9 +89,14 @@ class App extends Component {
   }
 
   nextTurn() {
-    exportTurn(this.state.game.carrack, this.state.game.turn)
     if (this.remainingFloatingShips(this.remainingEnemyShips()).length > 0) {
-      this.setState({ turn: this.state.game.turn + 1, playerMoves: 3, selected: null })
+      const game = Object.assign({}, this.state.game)
+      game.turn += 1
+
+      this.setState(
+        { game, playerMoves: 3, selected: null }
+      )
+      exportTurn(game, this.state.auth.jwt)
     } else {
       this.endGame()
     }
