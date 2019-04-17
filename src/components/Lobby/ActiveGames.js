@@ -4,15 +4,19 @@ import ActiveGame from './ActiveGame'
 export default class ActiveGames extends Component {
 
   renderActiveGames() {
-    return this.props.activeGames.map(game => {
-      return <ActiveGame />
-    })
+    if (this.props.activeGames) {
+      return this.props.activeGames.map(game => {
+        return <ActiveGame key={game.id} game={game} />
+      })
+    } else {
+      return null
+    }
   }
 
   render() {
     return (
       <ul>
-        {true ? null : this.renderActiveGames()}
+        {this.renderActiveGames()}
       </ul>
     )
   }

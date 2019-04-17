@@ -1,8 +1,8 @@
 import { httpRequestJWT } from './helpers'
 import { parse, stringify } from 'flatted/esm'
-import { GAMES_URL } from './ENV'
+import { GAMES_URL, BASE_URL } from './ENV'
 
-function exportTurn (gameObj, turn, auth) {
+function exportTurn (gameObj, turn, jwt) {
   // Stringify gameObj.
   // Combine JSON and turn into one object.
   // Post resource creation during "new game".
@@ -10,7 +10,7 @@ function exportTurn (gameObj, turn, auth) {
   console.log(parse(stringify(gameObj)))
 }
 
-function importTurn (turn, auth) {
+function importTurn (turn, jwt) {
   // Fetch request to server.
   // Check to see if a new turn exists. (wait with interval)
   // If new turn, pulls down data.
@@ -21,11 +21,20 @@ function importTurn (turn, auth) {
   instantiateTurn()
 }
 
-function joinGame (auth) {
-  // Called by App when user joins game.
+// function createGame(player_id, jwt) { 
+//   console.log(player_id, jwt)
+//   const activeGamesURL = BASE_URL + '/game/create'
+//   httpRequestJWT(activeGamesURL, 'post', jwt, { game: { player_id }})
+//     .then(r => r.json())
+//     .then(console.log)
+// }
 
-  console.log('new game')
-  instantiateTurn()
+
+function createGame (player_id, opponent_id, jwt) {
+  const activeGamesURL = BASE_URL + '/game/create'
+  httpRequestJWT(activeGamesURL, 'post', jwt, { game: { player_id, opponent_id }})
+    .then(r => r.json())
+    .then(console.log)
 }
 
 function instantiateTurn () {
@@ -36,23 +45,30 @@ function instantiateTurn () {
   console.log('instantiate turn')
 }
 
-function winGame(auth) {}
+function availableTurn(id, turn, jwt) {}
 
-function exitGame(auth) {}
+function winGame(jwt) {}
 
-function activeGames(auth) {
-  httpRequestJWT(GAMES_URL)
+function exitGame(jwt) {}
+
+function activeGames(jwt) {
+  const activeGamesURL = BASE_URL + '/game/active_games'
+  return httpRequestJWT(activeGamesURL, 'get', jwt)
 }
 
-function availableGames(auth) {}
+function availablePlayers(jwt) {
+  const activeGamesURL = BASE_URL + '/player/available_players'
+  return httpRequestJWT(activeGamesURL, 'get', jwt)
+}
 
 
 export { 
   importTurn, 
   exportTurn, 
-  joinGame, 
+  createGame,
+  // joinGame, 
   winGame, 
   exitGame, 
   activeGames, 
-  availableGames 
+  availablePlayers 
 }

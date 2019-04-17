@@ -6,27 +6,29 @@ import Lobby from './components/Lobby/Lobby.js'
 import { Carrack } from './game/Carrack.js'
 import { Ship } from './game/Ship.js'
 import { httpRequestJWT } from './helpers.js'
-import { importTurn, exportTurn, joinGame, winGame, exitGame } from './dataHandlers.js'
+import { importTurn, exportTurn, 
+         joinGame, winGame, exitGame,
+         activeGames, availableGames  } from './dataHandlers.js'
 import { PLAYERS_URL, BASE_URL } from './ENV'
 
 class App extends Component {
   constructor(props) {
     super(props)
 
-    const carrack = new Carrack(8)
-    const ship1 = new Ship(1, 1, 2, 2, 'up', 2, 10, 10, carrack)
-    const ship2 = new Ship(2, 2, 4, 4, 'down', 2, 10, 10, carrack)
-    const ship3 = new Ship(3, 2, 5, 5, 'down', 2, 10, 10, carrack)
-    const ship4 = new Ship(4, 1, 3, 3, 'up', 2, 10, 10, carrack)
-    carrack.placeShip(ship1)
-    carrack.placeShip(ship2)
-    carrack.placeShip(ship3)
-    carrack.placeShip(ship4)
+    // const carrack = new Carrack(8)
+    // const ship1 = new Ship(1, 1, 2, 2, 'up', 2, 10, 10, carrack)
+    // const ship2 = new Ship(2, 2, 4, 4, 'down', 2, 10, 10, carrack)
+    // const ship3 = new Ship(3, 2, 5, 5, 'down', 2, 10, 10, carrack)
+    // const ship4 = new Ship(4, 1, 3, 3, 'up', 2, 10, 10, carrack)
+    // carrack.placeShip(ship1)
+    // carrack.placeShip(ship2)
+    // carrack.placeShip(ship3)
+    // carrack.placeShip(ship4)
 
     this.state = {
       player: {},
       auth: false,
-      carrack:  carrack,
+      carrack: null, // carrack,
       selected: null,
       turn: 0,
       playerMoves: 3,
@@ -152,7 +154,7 @@ class App extends Component {
             toggleSelected={this.toggleSelected}
           />
           :
-          <Lobby />
+          <Lobby auth={this.state.auth}/>
         }
       </div>
     );
