@@ -33,14 +33,14 @@ class App extends Component {
     this.state = {
       player: {},
       auth: false,
-      carrack: carrack,
+      carrack: null, //carrack,
       selected: null,
       turn: 0,
       playerMoves: 3,
       explosionAt: null
     }
 
-    exportTurn(this.state.carrack, this.state.turn, this.state.auth.jwt)
+    exportTurn(this.state, this.state.auth.jwt)
   }
 
   moveShip(x, y, ship) {

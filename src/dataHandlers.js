@@ -2,24 +2,28 @@ import { httpRequestJWT, httpRequestGame } from './helpers'
 import { parse, stringify } from 'flatted/esm'
 import { GAMES_URL, BASE_URL } from './ENV'
 
-function exportTurn (gameObj, turn, jwt) {
+function exportTurn (gameState, jwt) {
   // Stringify gameObj.
   // Combine JSON and turn into one object.
   // Post resource creation during "new game".
   // Put to new_turn route.
 
-  const gameData = {
-    //id: game_id
-    player1_id,
-    player2_id,
-    turn,
-    finished,
-    winner,
-    game_state: gameObj
+  // const gameData = {
+  //   //id: game_id
+  //   player1_id,
+  //   player2_id,
+  //   turn,
+  //   finished,
+  //   winner,
+  //   game_state: gameObj
+  // }
+  console.log(gameState)
+  const initialGame = {
+    game_state: gameState.carrack
   }
 
-  httpRequestGame(`${BASE_URL}/game/export_turn`, 'PUT', jwt, gameData)
-  console.log(parse(stringify(gameObj)))
+  // httpRequestGame(`${BASE_URL}/game/export_turn`, 'PUT', jwt, gameData)
+  console.log(stringify(initialGame))
 }
 
 function importTurn (turn, jwt) {
@@ -46,7 +50,10 @@ function createGame (player_id, opponent_id, jwt) {
   const activeGamesURL = BASE_URL + '/game/create'
   httpRequestJWT(activeGamesURL, 'post', jwt, { game: { player_id, opponent_id }})
     .then(r => r.json())
-    .then(console.log)
+    .then(json => {
+      json.game_state = parse(json.game_state)
+      console.log(json)
+    })
 }
 
 function instantiateTurn () {
