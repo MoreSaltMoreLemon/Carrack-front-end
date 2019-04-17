@@ -16,6 +16,7 @@ export function httpRequest(url, method='GET', data={}) {
 }
 
 export function httpRequestJWT(url, method='GET', jwt, data={}) {
+  // console.log("HTTPREQUEST, JWT", data)
   const init = {
     headers: {
       'Accept': 'application/json',

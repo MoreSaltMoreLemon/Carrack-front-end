@@ -15,10 +15,26 @@ class Ship extends Component {
     const size = this.props.size
     return (
       <Fragment>
-        <MoveButton ship={ship} shipActions={this.props.shipActions} size={size} coords={{x: ship.x - 1, y: ship.y}} />
-        <MoveButton ship={ship} shipActions={this.props.shipActions} size={size} coords={{x: ship.x + 1, y: ship.y}} />
-        <MoveButton ship={ship} shipActions={this.props.shipActions} size={size} coords={{x: ship.x, y: ship.y - 1}} />
-        <MoveButton ship={ship} shipActions={this.props.shipActions} size={size} coords={{x: ship.x, y: ship.y + 1}} />
+        <MoveButton
+          ship={ship} 
+          shipActions={this.props.shipActions} 
+          size={size} 
+          coords={{x: ship.x - 1, y: ship.y}} />
+        <MoveButton
+          ship={ship} 
+          shipActions={this.props.shipActions} 
+          size={size} 
+          coords={{x: ship.x + 1, y: ship.y}} />
+        <MoveButton
+          ship={ship} 
+          shipActions={this.props.shipActions} 
+          size={size} 
+          coords={{x: ship.x, y: ship.y - 1}} />
+        <MoveButton
+          ship={ship} 
+          shipActions={this.props.shipActions} 
+          size={size} 
+          coords={{x: ship.x, y: ship.y + 1}} />
       </Fragment>
     )
   }
@@ -36,9 +52,10 @@ class Ship extends Component {
     }
     const selectedClass = this.props.selected ? 'selected-ship' : ''
     const teamClass = this.props.ship.player % 2 === 0 ? 'team2' : 'team1'
+    const currentPlayer = this.props.currentPlayer === this.props.ship.player ? 'current-player' : ''
     const sunkenClass = this.props.ship.sunk ? 'sunk' : selectedClass + ' ' + teamClass
     const shipDirectionClass = this.props.ship.direction
-    const className = `ship ${shipDirectionClass} ${sunkenClass}`
+    const className = `ship ${shipDirectionClass} ${sunkenClass} ${currentPlayer}`
 
     return (
       <Fragment>

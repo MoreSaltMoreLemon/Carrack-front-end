@@ -8,8 +8,7 @@ class Carrack {
   //                   ({type: 'water', occupiedBy: null })))
   //   this.ships = {}
   // }
-  constructor(gameState = { size: 12, board: [], ships: []}) {
-    console.log(gameState)
+  constructor(gameState = { size: 12, board: [], ships: {}}) {
     this.size = gameState.size
     this.board = gameState.board
     this.ships = this.placeShips(gameState.ships)
@@ -24,12 +23,17 @@ class Carrack {
   }
 
   placeShips(ships) {
-    console.log(ships)
-    ships = Object.values(ships)
-    return ships.map(shipProperties => {
+    const newShips =  Object.values(ships).map(shipProperties => {
       shipProperties.gameObj = this
       return new Ship(shipProperties)
     })
+
+    const mappedShips = {}
+    newShips.map(ship => {
+      mappedShips[ship.id] = ship
+    })
+
+    return mappedShips
   }
 
   placeShip(ship) {

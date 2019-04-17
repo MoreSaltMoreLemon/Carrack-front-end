@@ -20,7 +20,7 @@ export default class Lobby extends Component {
   }
 
   updateInterval() {
-    console.log("SET UPDATE INTERVAL!!!")
+    // console.log("SET UPDATE INTERVAL!!!")
     const intervalID = setInterval(this.updateGames.bind(this), 1000)
     this.setState({ intervalID })
   }
@@ -30,7 +30,7 @@ export default class Lobby extends Component {
   }
 
   updateGames() {
-    console.log("UPDATE!")
+    // console.log("UPDATE!")
     const jwt = this.props.auth.jwt
     activeGames(jwt)
       .then(r => r.json())
@@ -52,8 +52,8 @@ export default class Lobby extends Component {
     const opponent_id = id
     createGame(player_id, opponent_id, jwt)
       .then(game => {
-        console.log("GAME", game)
-        this.props.importTurn(game)
+        // console.log("GAME", game)
+        this.props.setImportedTurn(game)
       })
   }
 

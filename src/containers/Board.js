@@ -28,6 +28,7 @@ export default class Board extends Component {
   renderShips() {
     const size = this.props.carrack.size
     const ships = Object.values(this.props.carrack.ships)
+    const currentPlayer = this.props.turn % 2 === 0 ? 2 : 1
     return (
       ships.map(ship => {
         const place = gridPlacement(ship.x, ship.y, size)
@@ -38,6 +39,7 @@ export default class Board extends Component {
               key={place}
               ship={ship}
               place={place}
+              currentPlayer={currentPlayer}
               size={size}
               selected={selected}
               toggleSelected={() => this.props.toggleSelected(ship.id)}

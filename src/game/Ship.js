@@ -1,6 +1,6 @@
 
 class Ship {
-  constructor(shipState = {id: 0, player: 0, x: 0, y: 0, direction: 'left', moves: 3, hp: 0, damage: 0, gameObj: null}) {
+  constructor(shipState = {id: 0, player: 0, x: 0, y: 0, direction: 'left', moves: 3, hp: 10, damage: 5, gameObj: null}) {
     this.id = shipState.id
     this.player = shipState.player
     this.x = shipState.x
@@ -10,7 +10,7 @@ class Ship {
     this.hp = shipState.hp
     this.damage = shipState.damage
     this.sunk = shipState.false
-    this.gameObj = shipState.gameObj
+    // this.gameObj = shipState.gameObj
   }
 
   movement(x, y, prevBoard) {
@@ -23,6 +23,7 @@ class Ship {
       this.x = x
       this.y = y
     }
+    console.log("NEW BOARD", newBoard)
     return newBoard
   }
 
@@ -61,6 +62,8 @@ class Ship {
       return false
     }
   }
+
+  copyShip
 }
 
 export { Ship }

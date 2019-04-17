@@ -41,7 +41,7 @@
 }
 
 .selected-ship {
-  z-index: 4;
+  z-index: 8;
 }
 
 .up, .down, .right, .left {
@@ -113,16 +113,17 @@
 } */
 
 .movement-button {
-  background-image: url('/img/arrow.png');
-  background-repeat: no-repeat;
-  background-position: center;
+  background-color: rgba(191,0,0,0.3);
+  /* background-image: url('/img/arrow.png'); */
+  /* background-repeat: no-repeat; */
+  /* background-position: center; */
   /* transform: scale(25%); */
-  opacity: .3;
+  /* opacity: .3; */
 }
 
-.move-up     { transform: rotate(180deg); }
-.move-left   { transform: rotate(90deg); }
-.move-right  { transform: rotate(270deg); }
+/* .move-up     { transform: rotate(180deg); } */
+/* .move-left   { transform: rotate(90deg); } */
+/* .move-right  { transform: rotate(270deg); } */
 
 .water, .lobby {
   background-image: url('/img/waterOk_blur.png');
@@ -145,4 +146,7 @@
   height: 100px;
   background-color: red;
   border-radius: 100%;
+}
+.current-player {
+  z-index: 6;
 }

@@ -51,10 +51,11 @@ class App extends Component {
   moveShip(x, y, ship) {
     const oldBoard = this.state.game.carrack.board
     const newBoard = ship.movement(x, y, oldBoard)
-    const updatedState = Object.assign({}, this.state.game.carrack)
-    updatedState.board = newBoard
-  
-    this.setState({carrack: {...this.state.game.carrack, board: newBoard}})
+    // const updatedState = Object.assign({}, this.state.game.carrack)
+    // updatedState.board = newBoard
+    const game = { ...this.state.game, carrack: {...this.state.game.carrack, board: newBoard}}
+    console.log("GAME CHANGE", game)
+    this.setState(prevState => ({ ...prevState, game }))
   }
 
   attackShip(x, y, ship, enemyShip) {
@@ -73,19 +74,31 @@ class App extends Component {
     this.setState({ explosionAt: null })
   }
 
+  remainingEnemyShips() {
+    const ships = Object.values(this.state.game.carrack.ships)
+    return ships.filter(ship => ship.player % 2 !== this.state.game.turn % 2)
+  }
+
+  remainingFloatingShips(ships) {
+    return ships.filter(ship => !ship.sunk)
+  }
+
   // determine what to do based on coords it is given and contents of those coords.
   shipActions = ({x, y}, ship) => {
     const cell = this.state.game.carrack.board[x][y]
+    // console.log("WHAT IS IN THE CELL?", cell)
     if (cell.occupiedBy) {
+      // console.log("OCCUPADO")
       const occupyingShip = this.state.game.carrack.ships[cell.occupiedBy]
       if (occupyingShip.player !== ship.player) {
         this.attackShip(x, y, ship, occupyingShip)
       }
     } else {
+      // console.log("NO OCCUPADO")
       this.moveShip(x, y, ship)
     }
-    if (this.state.playerMoves === 1) this.nextTurn()
-    else this.setState({ playerMoves: this.state.playerMoves - 1 })
+    
+    this.setState({ playerMoves: this.state.playerMoves - 1 })
   }
 
   nextTurn() {
@@ -97,23 +110,23 @@ class App extends Component {
         { game, playerMoves: 3, selected: null }
       )
       exportTurn(game, this.state.auth.jwt)
+      importTurn(game, this.state.auth.jwt, this.setImportedTurn)
     } else {
       this.endGame()
     }
   }
 
-  importTurn = (game) => {
+  componentDidUpdate() {
+    if (this.state.playerMoves <= 0) {
+      this.nextTurn()
+    }
+  }
+
+  setImportedTurn = (game) => {
     this.setState({ game })
   }
 
-  remainingEnemyShips() {
-    const ships = Object.values(this.state.game.carrack.ships)
-    return ships.filter(ship => ship.player % 2 !== this.state.game.turn % 2)
-  }
-
-  remainingFloatingShips(ships) {
-    return ships.filter(ship => !ship.sunk)
-  }
+  
 
   endGame() {
     alert("GAME OVER MAN, GAME OVER")
@@ -141,6 +154,7 @@ class App extends Component {
   }
 
   toggleSelected = (id) => {
+    console.log("TOGGLE SELECTED", id)
     const shipPlayer = this.state.game.carrack.ships[id].player
     const turnPlayer = this.state.game.turn % 2 === 0 ? 2 : 1
     console.log("WHOS TURN IS IT", shipPlayer, turnPlayer)
@@ -177,7 +191,7 @@ class App extends Component {
           :
           <Lobby 
             auth={this.state.auth}
-            importTurn={this.importTurn}
+            setImportedTurn={this.setImportedTurn}
           />
         }
       </div>

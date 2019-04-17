@@ -36,7 +36,7 @@ export default class LoginPlayer extends Component {
     httpRequest(BASE_URL + '/login', "post", {player: {...params}})
       .then(response => response.json())
       .then(auth => {
-        console.log(auth)
+        // console.log(auth)
         this.props.setAuth(auth)
       })
   }
