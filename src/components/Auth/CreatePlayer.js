@@ -43,7 +43,7 @@ export default class CreatePlayer extends Component {
     return (
       <div className="create-player">
         <form>
-          <label>Username: 
+          <label>Username:  
             <input
               type="text"
               name="username"
@@ -52,7 +52,7 @@ export default class CreatePlayer extends Component {
               onChange={this.onChangeHandler}
             />
           </label>
-          <label>Email: 
+          <label>Email:  
             <input
               type="text"
               name="email"
