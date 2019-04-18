@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css?family=IM+Fell+English+SC');
+@import url('https://fonts.googleapis.com/css?family=IM+Fell+English');
+
 .App {
   text-align: center;
 }
@@ -147,10 +150,81 @@
   background-color: red;
   border-radius: 100%;
 }
+
 .current-player {
   z-index: 6;
 }
 
-.exit-button {
-  
+.lobby {
+  position: relative;
+}
+
+.available-component {
+  position: absolute;
+  width: 100%;
+  top: 5vh;
+}
+
+.available-header {
+  font-family: 'IM Fell English SC', serif;
+  color: rgb(255,191,0);
+  text-shadow: 3px 2px 3px rgb(32,32,32), 0px 0px 20px rgb(0,0,0);
+}
+
+.available-list {
+  list-style: none;
+  width: 50vw;
+  /* max-width: 25vw; */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.available-player {
+  font-family: 'IM Fell English SC', serif;
+  font-weight: bold;
+  font-size: 1.2em;
+  text-shadow: 0px 0px 4px rgba(0,0,0,0.6);
+  color: rgb(235, 176, 0);
+  border: 1px solid rgba(230, 230, 230, 0.7);
+  border-radius: 8px;
+  background-color: rgba(24, 24, 75, 0.893);
+  box-shadow: 3px 2px 3px rgb(32,32,32);
+  margin-bottom: 4px;
+}
+
+.available-player:hover {
+  color: rgb(255,255,255);
+  border-color: rgba(255,191,0,1);
+  background-color: rgba(191,127,0,0.9);
+  box-shadow: 3px 2px 2px rgb(0,0,0);
+}
+
+.active-component {
+  position: relative;
+}
+
+.active-header {
+  font-family: 'IM Fell English SC', serif;
+  color: rgb(255,191,0);
+  text-shadow: 3px 2px 3px rgb(32,32,32);
+}
+
+.active-list {
+  list-style: none;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.active-game {
+  font-family: 'IM Fell English SC', serif;
+  font-weight: bold;
+  font-size: 1.2em;
+  text-shadow: 0px 0px 4px rgba(0,0,0,0.6);
+  color: rgb(235, 176, 0);
+  border: 1px solid rgba(0,0,0,0.7);
+  border-radius: 8px;
+  background-color: rgba(201, 0, 0, 0.893);
+  box-shadow: 3px 2px 3px rgb(32,32,32);
+  margin-bottom: 4px;
 }

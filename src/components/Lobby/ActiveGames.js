@@ -16,9 +16,9 @@ export default class ActiveGames extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Active Games</h1>
-        <ul>
+      <div className='active-component'>
+        <h1 className='active-header'>Active Games</h1>
+        <ul className='active-list'>
           {this.renderActiveGames()}
         </ul>
       </div>
