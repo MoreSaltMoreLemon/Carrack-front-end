@@ -13,7 +13,7 @@ export default class LoginPlayer extends Component {
   }
 
   componentDidMount() {
-    this.loginUser({username: 'allen', password: 'password'})
+    // this.loginUser({username: 'allen', password: 'password'})
   }
 
   onChangeHandler = (e) => {
@@ -32,6 +32,7 @@ export default class LoginPlayer extends Component {
   }
 
   loginUser(params) {
+    console.log(params)
     // const {username, email, password} = params
     httpRequest(BASE_URL + '/login', "post", {player: {...params}})
       .then(response => response.json())

@@ -35,15 +35,14 @@ export default class Auth extends Component {
             <CreatePlayer setPlayer={this.props.setPlayer}/> :
             <div id='showCreateUser' onClick={this.toggleShow}>Create New User</div>
         }
-         
-          <LoginPlayer 
+        { showLogin ?
+            <LoginPlayer 
                 player={this.props.player}
                 setPlayer={this.props.setPlayer}
                 setAuth={this.props.setAuth}
                 auth={this.props.auth}
               /> :
-        { showLogin ? null :
-            <div id='showLogin' onClick={this.toggleShow}>Login</div> 
+            <div id='showLogin' onClick={this.toggleShow}>Login</div>
         }
         { showLogout ? 
             <LogoutPlayer logout={this.props.logout} /> :

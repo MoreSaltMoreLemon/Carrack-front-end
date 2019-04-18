@@ -59,10 +59,16 @@ class App extends Component {
   }
 
   attackShip(x, y, ship, enemyShip) {
-    const success = ship.attack(enemyShip)
-    if (success) {
+
+    const attackedShip = ship.attack(enemyShip.copySelf())
+    console.log(this.state.game.carrack.ships, attackedShip)
+    if (attackedShip.hp < this.state.game.carrack.ships[attackedShip.id].hp) {
       this.startExplosion(x, y)
     }
+    const ships = Object.assign({}, this.state.game.carrack.ships)
+    ships[attackedShip.id] = attackedShip
+    // debugger
+    this.setState({ game: { ...this.state.game, carrack : {...this.state.game.carrack, ships}}})
   }
 
   startExplosion(x, y) {
@@ -91,7 +97,7 @@ class App extends Component {
       // console.log("OCCUPADO")
       const occupyingShip = this.state.game.carrack.ships[cell.occupiedBy]
       if (occupyingShip.player !== ship.player) {
-        this.attackShip(x, y, ship, occupyingShip)
+        this.attackShip(x, y, ship, occupyingShip)        
       }
     } else {
       // console.log("NO OCCUPADO")
@@ -126,7 +132,14 @@ class App extends Component {
     this.setState({ game })
   }
 
-  
+  joinGame = (game) => {
+    this.setImportedTurn(game)
+    importTurn(game, this.state.auth.jwt, this.setImportedTurn)
+  }
+
+  createGame = (game) => {
+    this.setImportedTurn(game)
+  }
 
   endGame() {
     alert("GAME OVER MAN, GAME OVER")
@@ -191,7 +204,8 @@ class App extends Component {
           :
           <Lobby 
             auth={this.state.auth}
-            setImportedTurn={this.setImportedTurn}
+            createGame={this.createGame}
+            joinGame={this.joinGame}
           />
         }
       </div>

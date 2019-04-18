@@ -7,9 +7,13 @@ class Ship extends Component {
     super(props) 
 
     this.state = {
-      showStats: false
+      showStats: false  // toggles stat display on mouseOver
     }
   }
+
+  // Creates MoveButton components when ship is clicked
+  // MoveButtons will not render if they are placed on the edge of the map
+  // renderMoveButtons :: void -> JSX
   renderMoveButtons () {
     const ship = this.props.ship
     const size = this.props.size

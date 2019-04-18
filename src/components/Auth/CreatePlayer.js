@@ -31,7 +31,7 @@ export default class CreatePlayer extends Component {
 
   createUser(params) {
     const {username, email, password} = params
-    httpRequest(PLAYERS_URL, "post", params)
+    httpRequest(PLAYERS_URL, "post", {player: { ...params}})
       .then(response => response.json())
       .then(json => {
         console.log("CREATE USER", json)

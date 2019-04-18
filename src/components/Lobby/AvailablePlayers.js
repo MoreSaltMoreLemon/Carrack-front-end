@@ -3,7 +3,7 @@ import AvailablePlayer from './AvailablePlayer'
 
 export default class AvailablePlayers extends Component {
   renderAvailablePlayers() {
-    if (this.props.availablePlayers) {
+    if (this.props.availablePlayers.length > 0) {
       return this.props.availablePlayers.map(player => {
         return <AvailablePlayer 
                   key={player.id} 

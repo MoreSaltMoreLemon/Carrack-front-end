@@ -15,13 +15,12 @@ export default class Lobby extends Component {
     }
   }
 
-  componentDidMount() {
+  // componentDidMount() {
     // this.updateInterval()
-  }
+  // }
 
   updateInterval() {
-    // console.log("SET UPDATE INTERVAL!!!")
-    const intervalID = setInterval(this.updateGames.bind(this), 1000)
+    const intervalID = setInterval(this.updateGames, 4000)
     this.setState({ intervalID })
   }
 
@@ -29,22 +28,30 @@ export default class Lobby extends Component {
     clearInterval(this.state.intervalID)
   }
 
-  updateGames() {
-    // console.log("UPDATE!")
-    const jwt = this.props.auth.jwt
-    activeGames(jwt)
-      .then(r => r.json())
-      .then(activeGames => this.setState({ activeGames }))
-    availablePlayers(jwt)
-      .then(r => r.json())
-      .then(availablePlayers => this.setState({ availablePlayers }))
+  updateGames = () => {
+    console.log("UPDATE!")
+    if (this.props.auth.jwt) {
+      const jwt = this.props.auth.jwt
+      activeGames(jwt)
+        .then(r => r.json())
+        .then(activeGames => this.setState({ activeGames }))
+      availablePlayers(jwt)
+        .then(r => r.json())
+        .then(availablePlayers => this.setState({ availablePlayers }))
+    }
   }
 
-  // joinGameClickHandler = (id) => {
-  //   const jwt = this.props.auth.jwt
-  //   const player_id = this.props.auth.player.id
-  //   joinGame(id, player_id, jwt)
-  // }
+
+  joinGame = () => {
+    const player_id = this.props.auth.player.id
+    const jwt = this.props.auth.jwt
+    console.log(player_id)
+    joinGame(player_id, jwt)
+      .then(game => {
+        console.log("GAME", game)
+        this.props.joinGame(game)
+      })
+  }
 
   createGameClickHandler = (id) => {
     const player_id = this.props.auth.player.id
@@ -53,15 +60,15 @@ export default class Lobby extends Component {
     createGame(player_id, opponent_id, jwt)
       .then(game => {
         // console.log("GAME", game)
-        this.props.setImportedTurn(game)
+        this.props.createGame(game)
       })
   }
 
   render() {
     return (
       
-      <div className="lobby">
-        <img src='./img/lobbyShip.png' onClick={this.updateGames.bind(this)}></img>
+      <div className="lobby" onClick={this.updateGames}>
+        <img src='./img/lobbyShip.png'></img>
         {this.props.auth === false ? null : 
           <>
             <AvailablePlayers
@@ -71,7 +78,7 @@ export default class Lobby extends Component {
             <ActiveGames
               activeGames = {this.state.activeGames} 
             />
-            {/* <button className='create-game' onClick={this.createGameClickHandler} /> */}
+            <button className='create-game' onClick={this.joinGame} />
           </>
         }
       </div>

@@ -9,6 +9,7 @@ class Carrack {
   //   this.ships = {}
   // }
   constructor(gameState = { size: 12, board: [], ships: {}}) {
+    // debugger
     this.size = gameState.size
     this.board = gameState.board
     this.ships = this.placeShips(gameState.ships)
@@ -23,6 +24,7 @@ class Carrack {
   }
 
   placeShips(ships) {
+    // debugger
     const newShips =  Object.values(ships).map(shipProperties => {
       shipProperties.gameObj = this
       return new Ship(shipProperties)
