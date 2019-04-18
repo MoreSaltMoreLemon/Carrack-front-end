@@ -68,18 +68,23 @@ export default class Lobby extends Component {
     return (
       
       <div className="lobby" onClick={this.updateGames}>
-        <img src='./img/lobbyShip.png'></img>
-        {this.props.auth === false ? null : 
+        <img className='big-boat' src='./img/lobbyShip.png'></img>
+        {this.props.auth === false ?
           <>
-            <AvailablePlayers
-              availablePlayers={this.state.availablePlayers}  
-              createGame={this.createGameClickHandler}
-            />
-            <ActiveGames
-              activeGames = {this.state.activeGames} 
-            />
-            <button className='join-game' onClick={this.joinGame}>Join Game</button>
-          </>
+            <div className='carrack-title'>
+              <h1>Carrack</h1>
+            </div>
+          </> : 
+            <>
+              <AvailablePlayers
+                availablePlayers={this.state.availablePlayers}  
+                createGame={this.createGameClickHandler}
+              />
+              <ActiveGames
+                activeGames = {this.state.activeGames} 
+              />
+              <button className='join-game' onClick={this.joinGame}>Join Game</button>
+            </>
         }
       </div>
     )
