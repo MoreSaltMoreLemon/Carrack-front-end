@@ -8,7 +8,7 @@ import Explosion from '../components/Explosion'
 export default class Board extends Component {
 
   renderBoard() {
-    const carrack = this.props.carrack
+    const carrack = this.props.game.carrack
     return (
       carrack.board.map((column, columnIndex) => column.map((cell, cellIndex) => {
         const place = gridPlacement(columnIndex, cellIndex, carrack.size)
@@ -26,9 +26,9 @@ export default class Board extends Component {
   }
 
   renderShips() {
-    const size = this.props.carrack.size
-    const ships = Object.values(this.props.carrack.ships)
-    const currentPlayer = this.props.turn % 2 === 0 ? 2 : 1
+    const size = this.props.game.carrack.size
+    const ships = Object.values(this.props.game.carrack.ships)
+    const currentPlayer = this.props.game.turn % 2 === 0 ? 2 : 1
     return (
       ships.map(ship => {
         const place = gridPlacement(ship.x, ship.y, size)
@@ -51,13 +51,26 @@ export default class Board extends Component {
     )
   }
 
-  renderExplosion() {
+  renderOutcome () {
+    const g = this.props.game
+    if (g.winner) {
+      const winner = g.player1.id === this.props.player.id ? g.player1.username : g.player2.username
+      return <h1 className="winner-banner">{winner} wins!</h1>
+    } else if (g.finished) {
+      const opponent = g.player1.id !== this.props.player.id ? g.player1.username : g.player2.username
+      return <h1 className="winner-banner">{opponent} has left the game.</h1>
+    } else {
+      return null
+    }
+  }
 
+  renderExitButton () {
+    return (<div className="exit-button" onClick={this.props.exitGame}>Exit</div>)
   }
 
   boardGrid = () => {
     // debugger
-    const size = this.props.carrack.size
+    const size = this.props.game.carrack.size
     return (
       {
         'display': 'grid',
@@ -73,12 +86,14 @@ export default class Board extends Component {
       <div 
         className="board" 
         style={this.boardGrid()}
-      >
+      > 
+        {this.renderExitButton()}
+        {this.renderOutcome()}
         {this.renderBoard()}
         {this.renderShips()}
         <Explosion 
           explosionAt={this.props.explosionAt}
-          size={this.props.carrack.size}
+          size={this.props.game.carrack.size}
         />
       </div>
     )

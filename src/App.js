@@ -54,14 +54,14 @@ class App extends Component {
     // const updatedState = Object.assign({}, this.state.game.carrack)
     // updatedState.board = newBoard
     const game = { ...this.state.game, carrack: {...this.state.game.carrack, board: newBoard}}
-    console.log("GAME CHANGE", game)
+
     this.setState(prevState => ({ ...prevState, game }))
   }
 
   attackShip(x, y, ship, enemyShip) {
 
     const attackedShip = ship.attack(enemyShip.copySelf())
-    console.log(this.state.game.carrack.ships, attackedShip)
+
     if (attackedShip.hp < this.state.game.carrack.ships[attackedShip.id].hp) {
       this.startExplosion(x, y)
     }
@@ -80,6 +80,7 @@ class App extends Component {
     this.setState({ explosionAt: null })
   }
 
+
   remainingEnemyShips() {
     const ships = Object.values(this.state.game.carrack.ships)
     return ships.filter(ship => ship.player % 2 !== this.state.game.turn % 2)
@@ -92,15 +93,12 @@ class App extends Component {
   // determine what to do based on coords it is given and contents of those coords.
   shipActions = ({x, y}, ship) => {
     const cell = this.state.game.carrack.board[x][y]
-    // console.log("WHAT IS IN THE CELL?", cell)
     if (cell.occupiedBy) {
-      // console.log("OCCUPADO")
       const occupyingShip = this.state.game.carrack.ships[cell.occupiedBy]
       if (occupyingShip.player !== ship.player) {
         this.attackShip(x, y, ship, occupyingShip)        
       }
     } else {
-      // console.log("NO OCCUPADO")
       this.moveShip(x, y, ship)
     }
     
@@ -108,7 +106,7 @@ class App extends Component {
   }
 
   nextTurn() {
-    if (this.remainingFloatingShips(this.remainingEnemyShips()).length > 0) {
+    // if (this.remainingFloatingShips(this.remainingEnemyShips()).length > 0) {
       const game = Object.assign({}, this.state.game)
       game.turn += 1
 
@@ -117,14 +115,23 @@ class App extends Component {
       )
       exportTurn(game, this.state.auth.jwt)
       importTurn(game, this.state.auth.jwt, this.setImportedTurn)
-    } else {
-      this.endGame()
-    }
+    // } else {
+      // this.endGame()
+    // }
   }
 
   componentDidUpdate() {
     if (this.state.playerMoves <= 0) {
-      this.nextTurn()
+      if (this.remainingFloatingShips(this.remainingEnemyShips()).length === 0) {
+        if (this.state.game.winner) {
+          console.log("WINNER", this.state.game.winner)
+          this.nextTurn()
+        } else {
+          this.setState({ game: { ...this.state.game, winner: this.state.auth.player.id, finished: true}})
+        }
+      } else {
+        this.nextTurn()
+      }
     }
   }
 
@@ -141,8 +148,23 @@ class App extends Component {
     this.setImportedTurn(game)
   }
 
-  endGame() {
-    alert("GAME OVER MAN, GAME OVER")
+  exitGame = () => {
+    const game = Object.assign({}, this.state.game)
+    game.turn++
+    game.finished = true
+    exportTurn(game, this.state.auth.jwt)
+
+    this.setState({ 
+      game: {
+        carrack: null,
+        turn: 0,
+        finished: false,
+        id: null,
+        player1: null,
+        player2: null,
+        winner: 0
+      }
+    })
   }
 
   setPlayer = (player) => {
@@ -167,10 +189,8 @@ class App extends Component {
   }
 
   toggleSelected = (id) => {
-    console.log("TOGGLE SELECTED", id)
     const shipPlayer = this.state.game.carrack.ships[id].player
     const turnPlayer = this.state.game.turn % 2 === 0 ? 2 : 1
-    console.log("WHOS TURN IS IT", shipPlayer, turnPlayer)
     if (shipPlayer === turnPlayer) {
       const selected = id === this.state.selected ? null : id
 
@@ -194,12 +214,13 @@ class App extends Component {
         </header>
         { this.state.game.carrack ? 
           <Board 
-            carrack={this.state.game.carrack} 
-            turn={this.state.game.turn} 
+            game={this.state.game} 
             selected={this.state.selected}
             shipActions={this.shipActions} 
             explosionAt={this.state.explosionAt}
             toggleSelected={this.toggleSelected}
+            player={this.state.auth.player}
+            exitGame={this.exitGame}
           />
           :
           <Lobby 
