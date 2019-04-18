@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import './App.css';
 import Auth from './containers/Auth.js';
 import Board from './containers/Board.js'
@@ -203,15 +203,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <Auth 
-            setPlayer={this.setPlayer} 
-            player={this.state.player} 
-            setAuth={this.setAuth}
-            auth={this.state.auth}
-            logout={this.logout}
-          />
-        </header>
+        
         { this.state.game.carrack ? 
           <Board 
             game={this.state.game} 
@@ -223,11 +215,22 @@ class App extends Component {
             exitGame={this.exitGame}
           />
           :
-          <Lobby 
-            auth={this.state.auth}
-            createGame={this.createGame}
-            joinGame={this.joinGame}
-          />
+          <Fragment>
+            <header className="App-header">
+              <Auth 
+                setPlayer={this.setPlayer} 
+                player={this.state.player} 
+                setAuth={this.setAuth}
+                auth={this.state.auth}
+                logout={this.logout}
+              />
+            </header>
+            <Lobby 
+              auth={this.state.auth}
+              createGame={this.createGame}
+              joinGame={this.joinGame}
+            />
+          </Fragment>
         }
       </div>
     );

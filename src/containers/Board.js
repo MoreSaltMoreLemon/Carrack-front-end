@@ -58,14 +58,14 @@ export default class Board extends Component {
       return <h1 className="winner-banner">{winner} wins!</h1>
     } else if (g.finished) {
       const opponent = g.player1.id !== this.props.player.id ? g.player1.username : g.player2.username
-      return <h1 className="winner-banner">{opponent} has left the game.</h1>
+      return <h1 className="exit-banner">{opponent} has left the game.</h1>
     } else {
       return null
     }
   }
 
   renderExitButton () {
-    return (<div className="exit-button" onClick={this.props.exitGame}>Exit</div>)
+    return (<div className="leave-game" onClick={this.props.exitGame}><span>Exit</span></div>)
   }
 
   boardGrid = () => {

@@ -141,14 +141,43 @@
 
 }
 
-.create-game {
+.join-game, .leave-game {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 10px;
+  left: 10px;
   width: 100px;
   height: 100px;
   background-color: red;
   border-radius: 100%;
+  border-width: 3px;
+  border-color: rgb(255,191,0);
+  font-family: 'IM Fell English SC', serif;
+  font-size: 20px;
+  color: rgb(255,191,0);
+  text-shadow: 3px 2px 3px rgb(32,32,32), 0px 0px 20px rgb(0,0,0);
+  text-align: center;
+  vertical-align: middle;
+}
+
+.leave-game {
+  line-height: 100px;
+}
+
+.winner-banner, .exit-banner {
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  left: calc(50% - 115px);
+  font-family: 'IM Fell English SC', serif;
+  font-weight: bold;
+  font-size: 1.2em;
+  text-shadow: 0px 0px 4px rgba(0,0,0,0.6);
+  color: rgb(235, 176, 0);
+  border: 1px solid rgba(230, 230, 230, 0.7);
+  border-radius: 8px;
+  background-color: rgba(24, 24, 75, 0.893);
+  box-shadow: 3px 2px 3px rgb(32,32,32);
+  padding: 20px;
 }
 
 .current-player {

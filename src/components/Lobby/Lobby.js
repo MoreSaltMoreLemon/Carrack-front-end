@@ -15,9 +15,9 @@ export default class Lobby extends Component {
     }
   }
 
-  // componentDidMount() {
-    // this.updateInterval()
-  // }
+  componentDidMount() {
+    this.updateInterval()
+  }
 
   updateInterval() {
     const intervalID = setInterval(this.updateGames, 4000)
@@ -78,7 +78,7 @@ export default class Lobby extends Component {
             <ActiveGames
               activeGames = {this.state.activeGames} 
             />
-            <button className='create-game' onClick={this.joinGame} />
+            <button className='join-game' onClick={this.joinGame}>Join Game</button>
           </>
         }
       </div>
