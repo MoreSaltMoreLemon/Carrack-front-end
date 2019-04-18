@@ -189,15 +189,23 @@ class App extends Component {
   }
 
   toggleSelected = (id) => {
+    const player = this.whichPlayerAmI()
     const shipPlayer = this.state.game.carrack.ships[id].player
     const turnPlayer = this.state.game.turn % 2 === 0 ? 2 : 1
-    if (shipPlayer === turnPlayer) {
+    if (shipPlayer === turnPlayer) { // && turnPlayer === player) {
       const selected = id === this.state.selected ? null : id
 
       this.setState({ selected })
     } else {
       console.log("NOT YOUR TURN")
     }
+  }
+
+  whichPlayerAmI() {
+    const p1 = this.state.game.player1.id
+    const player = this.state.auth.player.id
+    if (p1 === player) return 1
+    else return 2
   }
 
   render() {

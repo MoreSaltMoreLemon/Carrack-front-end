@@ -54,7 +54,7 @@ export default class Board extends Component {
   renderOutcome () {
     const g = this.props.game
     if (g.winner) {
-      const winner = g.player1.id === this.props.player.id ? g.player1.username : g.player2.username
+      const winner = g.winner === g.player1.id ? g.player1.username : g.player2.username
       return <h1 className="winner-banner">{winner} wins!</h1>
     } else if (g.finished) {
       const opponent = g.player1.id !== this.props.player.id ? g.player1.username : g.player2.username
