@@ -73,7 +73,7 @@ export default class Lobby extends Component {
           <>
             <AvailablePlayers
               availablePlayers={this.state.availablePlayers}  
-              createGame={this.createGameClickHandler}            
+              createGame={this.createGameClickHandler}
             />
             <ActiveGames
               activeGames = {this.state.activeGames} 

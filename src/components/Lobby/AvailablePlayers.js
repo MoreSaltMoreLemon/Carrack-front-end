@@ -19,9 +19,9 @@ export default class AvailablePlayers extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Available Players:</h1>
-        <ul>
+      <div className='available-component'>
+        <h1 className='available-header'>Available Players:</h1>
+        <ul className='available-list'>
           {this.renderAvailablePlayers()}
         </ul>
       </div>

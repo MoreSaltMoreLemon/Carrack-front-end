@@ -7,7 +7,7 @@ export default class AvailablePlayer extends Component {
 
   render() {
     return (
-      <li onClick={this.createGame}>
+      <li className='available-player' onClick={this.createGame}>
         <p>{this.props.player.username}</p>
       </li>
     )
