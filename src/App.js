@@ -176,16 +176,20 @@ class App extends Component {
   }
 
   logOut = () => {
+    const auth = this.state.auth.jwt
+    const password = this.state.player.password
+    let {id, username} = this.state.auth.player
+    httpRequestJWT(
+      BASE_URL + "/api/v1/logout/", 'post', auth, {player: {id, username, password}} )
     this.setState({ auth: false, player: {} })
   }
 
   loggedIn = () => {
     const auth = this.state.auth.jwt
     const password = this.state.player.password
-    let {email, id, username} = this.state.auth.player
-    email = "yourmom"
+    let {id, username} = this.state.auth.player
     httpRequestJWT(
-      BASE_URL + "/api/v1/players/" + id, 'put', auth, {player: {email, id, username, password}} )
+      BASE_URL + "/api/v1/players/" + id, 'put', auth, {player: {id, username, password}} )
   }
 
   toggleSelected = (id) => {
